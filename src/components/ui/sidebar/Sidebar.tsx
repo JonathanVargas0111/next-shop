@@ -2,26 +2,47 @@
 import Link from "next/link"
 import { IoCloseOutline, IoLogInOutline, IoLogOutOutline, IoPeopleOutline, IoPersonOutline, IoSearchOutline, IoShirtOutline, IoTicketOutline } from "react-icons/io5"
 
-export const Sidebar = () => {
-    return (
+import { useUIStore } from "@/store"
+import clsx from "clsx"
 
+export const Sidebar = () => {
+    const { openSideMenu, closeSideMenu } = useUIStore()
+
+    const isSideMenuOpen = useUIStore((state) => state.isSideMenuOpen)
+    const closeSideMenuAction = useUIStore((state) => state.closeSideMenu)
+
+    return (
         <div>
             {/* Backgorund black */}
-            <div className="fixed top-0 left-0 w-screen h-screen z-10 bg-black opacity-30">
+            {
+                isSideMenuOpen && (
+                    <div className="fixed top-0 left-0 w-screen h-screen z-10 bg-black opacity-30">
 
-            </div>
-            <div className="fade-in fixed top-0 left-0 w-screen h-screen z-10 backdrop-filter backdrop-blur-sm">
-            </div>
-
+                    </div>
+                )
+            }
+            {
+                isSideMenuOpen && (
+                    <div 
+                    onClick={closeSideMenuAction}
+                    className="fade-in fixed top-0 left-0 w-screen h-screen z-10 backdrop-filter backdrop-blur-sm">
+                    </div>
+                )
+            }
             <nav
                 //todo:efectop de slide
-                className="fixed p-5 right-0 top-0 w-[500px] h-screen bg-white z-20 shadow-2xl trasnform transition-all duration-300">
+                className={
+                    clsx(
+                        "fixed p-5 right-0 top-0 w-[500px] h-screen bg-white z-20 shadow-2xl trasnform transition-all duration-300",
+                        {
+                            "translate-x-full" : !isSideMenuOpen
+                        }
+                    )
+                }>
                 <IoCloseOutline
                     size={50}
                     className="absolute top-5 right-5 cursor-pointer"
-                    onClick={(
-
-                    ) => { }}
+                    onClick={() => closeSideMenuAction()}
                 />
                 {/* Input */}
                 <div className="relative mt-14">
@@ -65,14 +86,14 @@ export const Sidebar = () => {
                     <IoLogOutOutline />
                     <span className="ml-3 text-xl">Logout</span>
                 </Link>
-                
-                <div className="w-full h-px bg-gray-200 my-5"/>
+
+                <div className="w-full h-px bg-gray-200 my-5" />
 
                 <Link
                     href={'/'}
                     className="flex items-center mt-4 p-2 hover:bg-gray-100 rounded transition-all"
                 >
-                    <IoShirtOutline/>
+                    <IoShirtOutline />
                     <span className="ml-3 text-xl">Products</span>
                 </Link>
 
@@ -80,7 +101,7 @@ export const Sidebar = () => {
                     href={'/'}
                     className="flex items-center mt-4 p-2 hover:bg-gray-100 rounded transition-all"
                 >
-                    <IoTicketOutline/>
+                    <IoTicketOutline />
                     <span className="ml-3 text-xl">Orders</span>
                 </Link>
 
@@ -88,7 +109,7 @@ export const Sidebar = () => {
                     href={'/'}
                     className="flex items-center mt-4 p-2 hover:bg-gray-100 rounded transition-all"
                 >
-                    <IoPeopleOutline/>
+                    <IoPeopleOutline />
                     <span className="ml-3 text-xl">Users</span>
                 </Link>
 
