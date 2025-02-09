@@ -10,9 +10,9 @@ interface Props {
     params: { id: Category }
 }
 
-export default function ({ params }: Props) {
+export default async function ({ params }: Props) {
 
-    const { id } = params;
+    const { id } = await params;
     const products = initialData.products.filter(product => product.gender === id)
 
     const label: Record<Category, string> = {
