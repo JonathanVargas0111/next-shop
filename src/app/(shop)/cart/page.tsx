@@ -7,19 +7,13 @@ import { BiTrash } from "react-icons/bi";
 import { redirect } from "next/navigation";
 
 
-const productInCart = [
-    initialData.products[0],
-    initialData.products[1],
-    initialData.products[2],
-    
-] 
-
+const productInCart = initialData.products.slice(0, 4)
 
 
 export default function () {
-    
+
     /* if (productInCart.length === 0) redirect("/empty") */
-    
+
     return (
         <div className="flex justify-center items-center mb-72 px-10 sm:px-0">
             <div className="flex flex-col w-[1000px]">
@@ -31,7 +25,7 @@ export default function () {
                             className="undeline mt-5">
                             View more products
                         </Link>
-                        <div className="flex flex-col gap-4" >
+                        <div className="flex flex-col gap-4 overflow-auto h-[600px]" >
 
                             {
                                 productInCart.map((product) => (
@@ -50,7 +44,7 @@ export default function () {
                                         <div className="w-full ">
                                             <div className="w-full min-w-full grid grid-cols-5 gap-2">
                                                 <p className="col-span-4">{product.title}</p>
-                                            <button className="underline col-span-1"><BiTrash className="w-6 h-6 text-red-600" /></button>
+                                                <button className="underline col-span-1"><BiTrash className="w-6 h-6 text-red-600" /></button>
                                             </div>
                                             <p>$ {product.price}</p>
                                             <QuantitySelector quantity={1} />
@@ -61,7 +55,7 @@ export default function () {
                         </div>
                     </div>
                     {/* Checkout */}
-                    <div className="bg-white rounded-xl sahdow-xl p-7">
+                    <div className="bg-white rounded-xl sahdow-xl p-7 mt-24 h-fit ">
                         <h2 className="text-2xl mb-2 font-semibold">Checkout</h2>
                         <div className="grid grid-cols-2">
                             <span>No Products</span>
@@ -72,9 +66,12 @@ export default function () {
 
                             <span>Taxes</span>
                             <span className="text-right"> $ 100</span>
-
-                            <span className="mt-5 text-2xl">Total</span>
-                            <span className="text-right">$ 100</span>
+                            <div className="grid col-span-2 mt-3" >
+                                <div className="w-full flex flex-row items-center justify-between text-2xl">
+                                    <p className="font-bold">Total</p>
+                                    <p className="font-semibold">$ 100</p>
+                                </div>
+                            </div>
 
                         </div>
                         <div className="mt-5 mb-2 w-full">
